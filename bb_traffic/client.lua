@@ -1,22 +1,24 @@
+Config = {}
+local configFile = LoadResourceFile(GetCurrentResourceName(), "config/config.lua")
+if configFile then
+    assert(load(configFile))()
+end
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-      -- 0.0 Removes All AI
-      -- 0.5 Only Half Remains
-      -- 1.0 Normal Density
-        TrafficDensity(0.0) --Change this to your liking
-        PedDensity(0.0) --Change this to your liking
+        SetTrafficDensity(Config.TrafficDensity)
+        SetPedDensity(Config.PedDensity)
     end
 end)
 
-
-function TrafficDensity(density)
+function SetTrafficDensity(density)
     SetParkedVehicleDensityMultiplierThisFrame(density)
     SetVehicleDensityMultiplierThisFrame(density)
     SetRandomVehicleDensityMultiplierThisFrame(density)
 end
 
-function PedDensity()
+function SetPedDensity(density)
     SetPedDensityMultiplierThisFrame(density)
     SetScenarioPedDensityMultiplierThisFrame(density)
 end
